@@ -82,15 +82,11 @@ The estimation follows a **two-stage IV-PPML gravity model** to recover the ad v
 
 3. **Second stage (PPML):** Estimates a Poisson pseudo-maximum-likelihood gravity equation for bilateral trade quantities, using the fitted policy values from the first stage:
 
-![Trade Model Formula](https://latex.codecogs.com/svg.image?\text{trade}_{ij,k}\sim\text{Poisson}\!\left(\exp\!\left[\beta_0^T\hat{\tau}_{ij,k}+\beta_1^T(s_i\hat{\tau}_{ij,k})+\beta_2^T(s_j\hat{\tau}_{ij,k})+\beta_0^N\hat{n}_{ij,k}+\beta_1^N(s_i\hat{n}_{ij,k})+\beta_2^N(s_j\hat{n}_{ij,k})+\mathbf{X}_{ij}\gamma\right]\right))
-
-   where $\hat{\tau}$ and $\hat{n}$ are fitted tariff and log-NTM values, $s_i$ and $s_j$ are importer and exporter trade shares, and $\mathbf{X}_{ij}$ includes distance, GDP, common border, and landlock controls.
+$$\text{trade}_{ij,k} \sim \text{Poisson}\left(\exp\left[\beta_0^T \hat{\tau}_{ij,k} + \beta_1^T (s_i \hat{\tau}_{ij,k}) + \beta_2^T (s_j \hat{\tau}_{ij,k}) + \beta_0^N \hat{n}_{ij,k} + \beta_1^N (s_i \hat{n}_{ij,k}) + \beta_2^N (s_j \hat{n}_{ij,k}) + \mathbf{X}_{ij}\gamma\right]\right)$$
 
 4. **AVE computation:** The AVE of NTMs for each bilateral–product cell is:
 
-   ![AVE Formula](https://latex.codecogs.com/svg.image?\text{AVE}_{ij,k}=-\frac{\hat{\beta}_{ij,k}^{N}}{\hat{\beta}_{ij,k}^{T}}\times%20n_{ij,k})
-
-   where the pair-specific coefficients $\hat{\beta}_{ij,k}^N$ and $\hat{\beta}_{ij,k}^T$ incorporate the trade-share heterogeneity terms.
+  $$\text{AVE}_{ij,k} = -\frac{\hat{\beta}_{ij,k}^N}{\hat{\beta}_{ij,k}^T} \times n_{ij,k}$$
 
 5. **Bootstrap standard errors:** 2,000 stratified balanced bootstrap replications (stratified by HS6 sector) are used to compute standard errors for the six structural coefficients.
 
