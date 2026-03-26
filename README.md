@@ -3,6 +3,9 @@
 This repository contains the code and supporting data to estimate the **ad valorem equivalent (AVE)** of non-tariff measures (NTMs) for goods trade, using a gravity-model approach with instrumental variables.
 
 ---
+> For questions, contact **Jiarui Zhang** at u7662428@anu.edu.au. If you would like to edit any files, please fork the repository and submit a PR rather than pushing directly to `main`.
+---
+
 
 ## Repository Structure
 
@@ -13,12 +16,11 @@ NTM_Estimation/
 ├── DATA/
 │   ├── BACI/
 │   │   ├── BACI.R                    # Cleans raw BACI trade data
-│   │   └── BACI_HS12_V202501 (Download from CEPII)/
+│   │   └── BACI_HS12_V202501/
 │   ├── MAcMap-HS6/
 │   │   ├── MAcMap.R                  # Cleans raw MAcMap tariff data
 │   │   ├── HS6 TO GTAP UPDATED.xlsx  # HS6 → GTAP sector crosswalk
-│   │   ├── mmhs6_2019_CLEANED_SimpleAverage (sample output).csv
-│   │   └── Tariffs_2001_2019 (Download from CEPII)/
+│   │   └── Tariffs_2001_2019/
 │   ├── NTM/
 │   │   ├── NTM Cleaning.R            # Cleans raw Global Trade Alert data
 │   │   └── interventions (Download from Global Trade Alert).csv
@@ -44,13 +46,13 @@ NTM_Estimation/
 
 ### 2. Trade Data — BACI (CEPII)
 - **Source:** [BACI — International Trade Database at the Product Level](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37)
-- **Files:** `DATA/BACI/BACI_HS12_V202501 (Download from CEPII)/BACI_HS12_Y[YEAR]_V202501.csv`
+- **Files:** `DATA/BACI/BACI_HS12_V202501/BACI_HS12_Y[YEAR]_V202501.csv`
 - Provides harmonised bilateral trade flows at the HS6 product level for all available years.
 - **Cleaning script:** `DATA/BACI/BACI.R` — maps HS6 codes to GTAP sectors and numeric country codes to ISO3.
 
 ### 3. Tariff Data — MAcMap-HS6 (CEPII)
 - **Source:** [MAcMap-HS6 — Applied Tariffs Database](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=12)
-- **Files:** `DATA/MAcMap-HS6/Tariffs_2001_2019 (Download from CEPII)/Tariffs_2001_2019/mmhs6_[YEAR].csv`
+- **Files:** `DATA/MAcMap-HS6/Tariffs_2001_2019/Tariffs_2001_2019/mmhs6_[YEAR].csv`
 - Provides applied bilateral tariff rates (ad valorem equivalents) at the HS6 product level.
 - **Cleaning script:** `DATA/MAcMap-HS6/MAcMap.R` — maps HS6 codes to GTAP sectors and computes simple averages within sector-pair cells.
 
@@ -80,15 +82,11 @@ The estimation follows a **two-stage IV-PPML gravity model** to recover the ad v
 
 3. **Second stage (PPML):** Estimates a Poisson pseudo-maximum-likelihood gravity equation for bilateral trade quantities, using the fitted policy values from the first stage:
 
-   $$\text{trade}_{ij,k} \sim \text{Poisson}\!\left(\exp\!\left[\beta_0^T \hat{\tau}_{ij,k} + \beta_1^T (s_i \hat{\tau}_{ij,k}) + \beta_2^T (s_j \hat{\tau}_{ij,k}) + \beta_0^N \hat{n}_{ij,k} + \beta_1^N (s_i \hat{n}_{ij,k}) + \beta_2^N (s_j \hat{n}_{ij,k}) + \mathbf{X}_{ij}\gamma\right]\right)$$
-
-   where $\hat{\tau}$ and $\hat{n}$ are fitted tariff and log-NTM values, $s_i$ and $s_j$ are importer and exporter trade shares, and $\mathbf{X}_{ij}$ includes distance, GDP, common border, and landlock controls.
+$$\text{trade}_{ij,k} \sim \text{Poisson}\left(\exp\left[\beta_0^T \hat{\tau}_{ij,k} + \beta_1^T (s_i \hat{\tau}_{ij,k}) + \beta_2^T (s_j \hat{\tau}_{ij,k}) + \beta_0^N \hat{n}_{ij,k} + \beta_1^N (s_i \hat{n}_{ij,k}) + \beta_2^N (s_j \hat{n}_{ij,k}) + \mathbf{X}_{ij}\gamma\right]\right)$$
 
 4. **AVE computation:** The AVE of NTMs for each bilateral–product cell is:
 
-   $$\text{AVE}_{ij,k} = -\frac{\hat{\beta}_{ij,k}^N}{\hat{\beta}_{ij,k}^T} \times n_{ij,k}$$
-
-   where the pair-specific coefficients $\hat{\beta}_{ij,k}^N$ and $\hat{\beta}_{ij,k}^T$ incorporate the trade-share heterogeneity terms.
+  $$\text{AVE}_{ij,k} = -\frac{\hat{\beta}_{ij,k}^N}{\hat{\beta}_{ij,k}^T} \times n_{ij,k}$$
 
 5. **Bootstrap standard errors:** 2,000 stratified balanced bootstrap replications (stratified by HS6 sector) are used to compute standard errors for the six structural coefficients.
 
