@@ -17,7 +17,6 @@ NTM_Estimation/
 │   ├── MAcMap-HS6/
 │   │   ├── MAcMap.R                  # Cleans raw MAcMap tariff data
 │   │   ├── HS6 TO GTAP UPDATED.xlsx  # HS6 → GTAP sector crosswalk
-│   │   ├── mmhs6_2019_CLEANED_SimpleAverage (sample output).csv
 │   │   └── Tariffs_2001_2019 (Download from CEPII)/
 │   ├── NTM/
 │   │   ├── NTM Cleaning.R            # Cleans raw Global Trade Alert data
