@@ -3,6 +3,9 @@
 This repository contains the code and supporting data to estimate the **ad valorem equivalent (AVE)** of non-tariff measures (NTMs) for goods trade, using a gravity-model approach with instrumental variables.
 
 ---
+> For questions, contact **Jiarui Zhang** at u7662428@anu.edu.au. If you would like to edit any files, please fork the repository and submit a PR rather than pushing directly to `main`.
+---
+
 
 ## Repository Structure
 
