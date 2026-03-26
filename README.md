@@ -16,11 +16,11 @@ NTM_Estimation/
 ├── DATA/
 │   ├── BACI/
 │   │   ├── BACI.R                    # Cleans raw BACI trade data
-│   │   └── BACI_HS12_V202501 (Download from CEPII)/
+│   │   └── BACI_HS12_V202501/
 │   ├── MAcMap-HS6/
 │   │   ├── MAcMap.R                  # Cleans raw MAcMap tariff data
 │   │   ├── HS6 TO GTAP UPDATED.xlsx  # HS6 → GTAP sector crosswalk
-│   │   └── Tariffs_2001_2019 (Download from CEPII)/
+│   │   └── Tariffs_2001_2019/
 │   ├── NTM/
 │   │   ├── NTM Cleaning.R            # Cleans raw Global Trade Alert data
 │   │   └── interventions (Download from Global Trade Alert).csv
@@ -46,13 +46,13 @@ NTM_Estimation/
 
 ### 2. Trade Data — BACI (CEPII)
 - **Source:** [BACI — International Trade Database at the Product Level](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37)
-- **Files:** `DATA/BACI/BACI_HS12_V202501 (Download from CEPII)/BACI_HS12_Y[YEAR]_V202501.csv`
+- **Files:** `DATA/BACI/BACI_HS12_V202501/BACI_HS12_Y[YEAR]_V202501.csv`
 - Provides harmonised bilateral trade flows at the HS6 product level for all available years.
 - **Cleaning script:** `DATA/BACI/BACI.R` — maps HS6 codes to GTAP sectors and numeric country codes to ISO3.
 
 ### 3. Tariff Data — MAcMap-HS6 (CEPII)
 - **Source:** [MAcMap-HS6 — Applied Tariffs Database](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=12)
-- **Files:** `DATA/MAcMap-HS6/Tariffs_2001_2019 (Download from CEPII)/Tariffs_2001_2019/mmhs6_[YEAR].csv`
+- **Files:** `DATA/MAcMap-HS6/Tariffs_2001_2019/Tariffs_2001_2019/mmhs6_[YEAR].csv`
 - Provides applied bilateral tariff rates (ad valorem equivalents) at the HS6 product level.
 - **Cleaning script:** `DATA/MAcMap-HS6/MAcMap.R` — maps HS6 codes to GTAP sectors and computes simple averages within sector-pair cells.
 
