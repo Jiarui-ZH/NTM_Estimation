@@ -1,4 +1,4 @@
-# need these packages
+# Libraries
 library(dplyr)
 library(stringr)
 library(readxl)
@@ -8,15 +8,15 @@ library(readxl)
 # In RStudio: Session > Set Working Directory > To Project Directory
 # ─────────────────────────────────────────────────────────────────────────────
 
-# your existing loads
+# Load data
 Baci_original <- read.csv(
-  "DATA/BACI/BACI_HS12_V202501 (Download from CEPII)/BACI_HS12_Y2019_V202501.csv",
+  "DATA/BACI/BACI_HS12_V202501/BACI_HS12_Y2019_V202501.csv",
   stringsAsFactors = FALSE
 )
 HS6_to_GTAP  <- read_excel("DATA/MAcMap-HS6/HS6 TO GTAP UPDATED.xlsx")
-country_code <- read.csv("DATA/BACI/BACI_HS12_V202501 (Download from CEPII)/country_codes_V202501.csv")
+country_code <- read.csv("DATA/BACI/BACI_HS12_V202501/country_codes_V202501.csv")
 
-# clean Baci and drop t, v
+# Clean BACI
 Baci_clean <- Baci_original %>%
   select(-t, -v) %>%
   rename(
@@ -26,15 +26,15 @@ Baci_clean <- Baci_original %>%
     trade_qty = q
   )
 
-# prepare HS6_to_GTAP: pad HS6 codes to 6 digits and uppercase the GTAP sectors
+# Prep HS6 mapping
 HS6_to_GTAP <- HS6_to_GTAP %>%
   mutate(
     HS6_code    = str_pad(as.character(`HS6 code`), width = 6, side = "left", pad = "0"),
-    GTAP_sector = toupper(`GTAP sector`)              # force uppercase here
+    GTAP_sector = toupper(`GTAP sector`)
   ) %>%
   select(HS6_code, GTAP_sector)
 
-# map product (HS6) → GTAP sector (ensuring uppercase)
+# Map to GTAP sectors
 Baci_mapped <- Baci_clean %>%
   mutate(
     product = str_pad(as.character(product), width = 6, side = "left", pad = "0")
@@ -44,14 +44,11 @@ Baci_mapped <- Baci_clean %>%
     by = c("product" = "HS6_code")
   ) %>%
   mutate(
-    product = GTAP_sector                              # overwrite with uppercase sector code
+    product = GTAP_sector
   ) %>%
   select(-GTAP_sector)
 
-# … your previous code up through Baci_mapped …
-
-#  Map importer & exporter numeric codes → Alpha‑3
-# build a small lookup
+# Map country codes to ISO3
 lookup_codes <- country_code %>%
   select(country_code, country_iso3)
 
@@ -61,14 +58,14 @@ Baci_mapped <- Baci_mapped %>%
     exporter = lookup_codes$country_iso3[match(exporter, lookup_codes$country_code)]
   )
 
-# inspect
+# Inspect
 head(Baci_mapped)
 
 
-# inspect
+# Inspect
 head(Baci_mapped)
 
-# write your cleaned–and–mapped BACI data frame to CSV
+# Write output
 write.csv(
   Baci_mapped,
   file      = "DATA/BACI/BACI_CLEANED.csv",
