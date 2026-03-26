@@ -112,11 +112,3 @@ Install all at once:
 install.packages(c("readxl", "dplyr", "fixest", "openxlsx", "stringr",
                    "combinat", "boot", "writexl", "readr", "tidyr"))
 ```
-
----
-
-## Notes
-
-- Raw BACI and MAcMap files are excluded from this repository due to file size. Download them directly from the CEPII links above and place them in the folders indicated by the folder names.
-- The `gravity_variables` file must be updated for the year of interest before running the model.
-- `DATA/NTM/NTM Cleaning.R` also requires a CEPII country code file (`DATA/Country Code.xls`) for mapping country names to ISO3 codes.
